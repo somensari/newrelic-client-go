@@ -16,6 +16,9 @@ const (
 	// This is for internal New Relic use only.
 	Staging Name = "Staging"
 
+	// Fedramp represents New Relic's Fedramp-based deployment.
+	Fedramp Name = "Fedramp"
+	
 	// Local represents a local development environment.
 	Local Name = "Local"
 )
@@ -52,6 +55,16 @@ var Regions = map[Name]*Region{
 		restBaseURL:           "https://staging-api.newrelic.com/v2",
 		syntheticsBaseURL:     "https://staging-synthetics.newrelic.com/synthetics/api",
 	},
+	Fedramp: {
+		name:                  "Fedramp",
+		infrastructureBaseURL: "https://gov-infra-api.newrelic.com/v2",
+		insightsBaseURL:       "https://gov-insights-collector.newrelic.com/v1",
+		insightsKeysBaseURL:   "https://gov-insights.newrelic.com/internal_api/1",
+		logsBaseURL:           "https://gov-log-api.newrelic.com/log/v1",
+		nerdGraphBaseURL:      "https://gov-api.newrelic.com/graphql",
+		restBaseURL:           "https://gov-api.newrelic.com/v2",
+		syntheticsBaseURL:     "https://gov-synthetics.newrelic.com/synthetics/api",
+	},
 	Local: {
 		name:                  "Local",
 		infrastructureBaseURL: "http://localhost:3000/v2",
@@ -76,6 +89,8 @@ func Parse(r string) (Name, error) {
 		return EU, nil
 	case "staging":
 		return Staging, nil
+	case "fedramp":
+		return Fedramp, nil
 	case "local":
 		return Local, nil
 	default:
